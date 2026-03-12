@@ -1,9 +1,9 @@
 node {
-
+    checkout scm
     // Ambil source code dari repository
-    stage('Checkout') {
-        checkout scm
-    }
+    // stage('Checkout') {
+    //     checkout scm
+    // }
 
     // Build aplikasi
     stage('Build') {
