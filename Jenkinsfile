@@ -16,26 +16,24 @@ node {
         }
     }
 
-    stage('Deploy Production') {
-        docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
+ stage('Deploy Production') {
+    docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
 
-            sshagent(credentials: ['ssh-prod']) {
+        sshagent(credentials: ['ssh-prod']) {
 
-                sh '''
-                mkdir -p ~/.ssh
-                chmod 700 ~/.ssh
+            sh '''
+            mkdir -p ~/.ssh
+            chmod 700 ~/.ssh
 
-                ssh-keyscan -H 172.17.124.242 >> ~/.ssh/known_hosts
+            ssh-keyscan -H 172.17.124.242 >> ~/.ssh/known_hosts
 
-                rsync -rav --delete ./ \
-                chandra@172.17.124.242:/home/chandra/prod.kelasdevops.xyz/ \
-                --exclude=.env \
-                --exclude=storage \
-                --exclude=.git
-                '''
-            }
-
+            rsync -rav --delete ./ \
+            chandra@172.17.124.242:/home/chandra/prod.kelasdevops.xyz/ \
+            --exclude=.env \
+            --exclude=storage \
+            --exclude=.git
+            '''
         }
     }
-
+}
 }
