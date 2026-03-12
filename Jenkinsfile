@@ -5,7 +5,7 @@ node {
     }
 
     stage('Build') {
-        docker.image('composer:2').inside('-u root') {
+        docker.image('composer:2').inside('-u root --entrypoint=""') {
             sh 'composer install'
         }
     }
@@ -18,19 +18,23 @@ node {
 
     stage('Deploy Production') {
         docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
-            sshagent (credentials: ['ssh-prod']) {
 
-                sh 'mkdir -p ~/.ssh'
-                sh "ssh-keyscan -H $PROD_HOST >> ~/.ssh/known_hosts"
+            sshagent(credentials: ['ssh-prod']) {
 
-                sh """
+                sh '''
+                mkdir -p ~/.ssh
+                chmod 700 ~/.ssh
+
+                ssh-keyscan -H 103.240.110.18 >> ~/.ssh/known_hosts
+
                 rsync -rav --delete ./ \
-                ubuntu@$PROD_HOST:/home/ubuntu/prod.kelasdevops.xyz/ \
+                ubuntu@103.240.110.18:/home/ubuntu/prod.kelasdevops.xyz/ \
                 --exclude=.env \
                 --exclude=storage \
                 --exclude=.git
-                """
+                '''
             }
+
         }
     }
 
