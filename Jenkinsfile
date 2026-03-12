@@ -33,9 +33,9 @@ node {
           chmod 700 ~/.ssh
           ssh-keyscan -H "$PROD_HOST" >> ~/.ssh/known_hosts
 
-          ssh -o StrictHostKeyChecking=no den@$PROD_HOST "mkdir -p /home/den/prod.kelasdevops.xyz"
+          ssh -o StrictHostKeyChecking=no den@$PROD_HOST "mkdir -p /home/chandra/prod.kelasdevops.xyz"
 
-          rsync -rav --delete ./ den@$PROD_HOST:/home/den/prod.kelasdevops.xyz/ \
+          rsync -rav --delete ./ den@$PROD_HOST:/home/chandra/prod.kelasdevops.xyz/ \
             --exclude=.env \
             --exclude=storage \
             --exclude=.git
