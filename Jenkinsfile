@@ -1,7 +1,7 @@
 node {
 
-    stage('Checkout') {
-        checkout scm
+    stage('Clone Repository') {
+        git branch: 'main', url: 'https://github.com/Loq13Julyx/devops-laravel.git'
     }
 
     stage('Build') {
