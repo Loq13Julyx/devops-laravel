@@ -25,10 +25,10 @@ node {
                 mkdir -p ~/.ssh
                 chmod 700 ~/.ssh
 
-                ssh-keyscan -H 103.240.110.18 >> ~/.ssh/known_hosts
+                ssh-keyscan -H 172.17.124.242 >> ~/.ssh/known_hosts
 
                 rsync -rav --delete ./ \
-                ubuntu@103.240.110.18:/home/ubuntu/prod.kelasdevops.xyz/ \
+                chandra@172.17.124.242:/home/chandra/prod.kelasdevops.xyz/ \
                 --exclude=.env \
                 --exclude=storage \
                 --exclude=.git
